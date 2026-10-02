@@ -1,10 +1,10 @@
 # Minesweeper
 
-A browser-only arcade game built as a single static HTML page. It needs no database or server runtime.
+A browser-only arcade game built with static HTML and JavaScript. It needs no database or server runtime.
 
 ## Run locally
 
-Open `index.html` in a modern browser, or serve this folder with any static web server.
+Keep `index.html` and `highway.js` together and open `index.html` in a modern browser, or serve this folder with any static web server.
 
 ## Deploy
 
