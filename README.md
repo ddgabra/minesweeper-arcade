@@ -18,7 +18,11 @@ The racing game is rendered in real-time 3D with [three.js](https://threejs.org)
 ## Street Life update
 
 - Walk-in 3D gas stations: intimidate the attendant and hold E for three seconds to rob the register. Take snacks from shelves and fuel from pumps. Registers have a two-minute cooldown; shelves and pumps can be looted once per station per run.
-- Press E below 15 km/h to leave a car. Walk with WASD, turn with arrow keys or click the scene for mouse look, and press V to switch first/third person. Hold G or right mouse to aim, J/K to punch, and H or left mouse while aiming to fire. Combat is stylized, without gore. Face a stopped occupied car, aim and press E to demand the keys and take it.
+- **On foot, GTA style.** The driver is a rigged, motion-captured 3D character (idle, walk, jog and sprint clips), and pedestrians are rigged too. Aiming, recoil, punches, jumping, swimming, falling and carjacking are posed on top of the animation in real time.
+  - **F** gets out of a car below 15 km/h (he steps out of the driver's door) and back in. Walk up to any stopped car with someone inside and press **F**: he walks round to the driver's door, pulls the driver out and drives off. Drivers brake for a pedestrian in front of them and for a pistol pointed at them.
+  - Click the scene to lock the mouse; the mouse orbits the camera and **WASD** moves relative to it. **Shift** sprints, **Alt** walks, **Space** jumps, **V** switches first/third person.
+  - **Right mouse** (or G) aims over the right shoulder with a crosshair that turns red on a target; **left mouse** (or H) fires. The pistol holds 12 rounds; **R** reloads. **Tab**, the mouse wheel or **1 / 2** switch between fists and pistol; with fists, left mouse or J / K throw punches.
+  - Pedestrians wander, put their hands up when a gun is pointed at them, flee from gunfire and fall when shot, punched or hit by a car. Combat has no blood. Getting hit by a car knocks the player down; losing all health shows **WASTED** and a roadside rescue.
 - Loot and combat raise a wanted level; returning to a car with heat starts a police pursuit. Z eats a snack; X uses a fuel can near the car. Snacks, fuel, wanted level and drift score last for the current run; coins use the existing saved wallet.
 - Station windows, pumps, crates, posts and signs take collision damage and break into debris. Solid walls and counters block cars and pedestrians.
 - Use **Visit gas station** to try the new gameplay immediately. The existing repairs/upgrade shop remains available through its button or B at a highway exit.
@@ -27,7 +31,7 @@ The racing game is rendered in real-time 3D with [three.js](https://threejs.org)
 - **6** selects Helicopter; **7** selects Top-down. Coins face upward and grow in those views so they stay visible.
 - On Sunset Coast, submerged cars lose propulsion and the player starts swimming. WASD swims, Shift swims faster at a higher stamina cost, and reaching shore restores stamina. Running out of stamina causes drowning damage and roadside rescue; R also calls rescue. Rescue after drowning or injury confiscates the current snack/fuel loot.
 
-Driving: arrows / WASD, Space handbrake, R tow, F fullscreen, C or 1–9 cameras, Q look back. Open **Controls · ?** while playing for the full list.
+Driving: arrows / WASD, Space handbrake, R tow, F get out, C or 1–9 cameras, Q look back; the ⛶ button toggles fullscreen. Open **Controls · ?** while playing for the full list.
 
 ## Run locally
 

@@ -17,6 +17,10 @@ All models were converted for the game: extracted from showcase scenes, rescaled
 
 The armored vehicles, trucks and roadside scenery are generated in code.
 
+## Characters
+
+The player and pedestrians are the Mixamo characters shipped with the [three.js examples](https://github.com/mrdoob/three.js/tree/r160/examples/models/gltf) (MIT-licensed repository): `Soldier.glb` (player, with its Idle / Walk / Run motion capture) and `Michelle.glb` (pedestrians). Characters and animations from [Mixamo](https://www.mixamo.com) by Adobe are royalty-free for use in projects under the Adobe General Terms of Use. The game retargets the soldier's motion onto the pedestrian skeleton when it loads; aiming, punches, carjacking, jumping, swimming and falls are posed in code.
+
 ## Textures
 
 Asphalt, grass, red sand, snow and concrete textures are from [Poly Haven](https://polyhaven.com) under [CC0](https://polyhaven.com/license): `asphalt_02`, `aerial_grass_rock`, `red_sand`, `snow_02`, `concrete_floor_02` (converted to WebP).

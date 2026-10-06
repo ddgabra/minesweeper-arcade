@@ -5,6 +5,7 @@
    Road cars are community glTF models (see CREDITS.md), normalised offline to metres with +X forward. */
 import * as T from 'three';
 import {StreetLife} from './street-life.js';
+import {loadCharacters} from './characters.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {Sky} from 'three/addons/objects/Sky.js';
@@ -873,8 +874,8 @@ function applyPlayerUpgrades(){const p=run.player,c=run.car,u=run.upgradeStats,d
 function startGame(){stopGame();window.showArcadeScreen('highway');if(!initRenderer())return;
  const stage=canvas.parentElement;let loading=stage.querySelector('.drive-loading');if(!loading){loading=document.createElement('div');loading.className='drive-loading';loading.innerHTML='<b>WARMING UP ENGINE…</b><small>Building the 3D world</small>';stage.appendChild(loading)}loading.hidden=false;
  // car models stream in first (detailed model for the player, light versions for traffic), then the world is built
- const token={};startGame.token=token;const car=playerCar(),label=loading.querySelector('small');label.textContent='Loading cars…';
- const needed=[...(car.model?[loadCarModel(car.model,false)]:[]),...Object.keys(MODEL_SPECS).map(id=>loadCarModel(id,true))];
+ const token={};startGame.token=token;const car=playerCar(),label=loading.querySelector('small');label.textContent='Loading cars and people…';
+ const needed=[...(car.model?[loadCarModel(car.model,false)]:[]),...Object.keys(MODEL_SPECS).map(id=>loadCarModel(id,true)),loadCharacters(gltfLoader)];
  Promise.all(needed).then(()=>{if(startGame.token!==token)return;label.textContent='Building the 3D world';setTimeout(()=>{if(startGame.token===token)buildRun(loading,token)},40)},err=>{console.error(err);if(startGame.token===token){loading.hidden=true;showFail('The car models could not load. Check your connection and reload.')}})}
 function buildRun(loading,token){
  const car=playerCar(),map=currentMap();effects.clear&&scene&&effects.clear();buildScene(map);applyGfx(Math.max(0,GFX.indexOf(difficulty.gfx)));
@@ -964,7 +965,7 @@ function update(dt){const p=run.player;run.elapsed+=dt;if(run.recoverT>0)run.rec
  if(street?.fuel<=0)p.input.throttle=0;
  if(street?.onFoot||p.submerged){p.input={steer:0,throttle:0,brake:1,reverse:0,handbrake:1}}
  if(p.boostT>0)p.boostT-=dt;
- for(const t of run.traffic)aiTraffic(t,dt);for(const c of run.pursuers)aiPursuer(c,dt);
+ for(const t of run.traffic){aiTraffic(t,dt);street?.yieldTo(t)}for(const c of run.pursuers)aiPursuer(c,dt);
  const vehicles=allVehicles();const sub=Math.max(2,Math.ceil(dt/.0055)),h=dt/sub;
  for(let k=0;k<sub;k++){for(const veh of vehicles){veh.step(h)}for(const veh of vehicles)veh.syncRoad();for(let i=0;i<vehicles.length;i++)for(let j=i+1;j<vehicles.length;j++)collidePair(vehicles[i],vehicles[j]);for(const veh of vehicles){staticCollisions(veh);street?.collide(veh)}}
  for(const veh of vehicles){veh.updateGear(dt);if(veh.ghost>0)veh.ghost-=dt;veh.syncMesh(dt);vehicleFx(veh,dt)}
@@ -1005,7 +1006,7 @@ function setDriveHud(){if(!run)return;street?.hud();updateStationEntry();const p
 
 // ---------------------------------------------------------------- 2D overlay: gauges, damage diagram, radar
 let overlayDpr=1;
-function drawOverlay(){const w=overlay.width/overlayDpr,h=overlay.height/overlayDpr,g=octx;g.clearRect(0,0,w,h);if(!run)return;if(street?.onFoot){if(street.input.aim){g.strokeStyle="white";g.lineWidth=2;g.beginPath();g.moveTo(w/2-7,h/2);g.lineTo(w/2+7,h/2);g.moveTo(w/2,h/2-7);g.lineTo(w/2,h/2+7);g.stroke()}return}const p=run.player,sc=clamp(w/900,.6,1.15);
+function drawOverlay(){const w=overlay.width/overlayDpr,h=overlay.height/overlayDpr,g=octx;g.clearRect(0,0,w,h);if(!run)return;if(street?.onFoot){street.drawOverlay(g,w,h);return}const p=run.player,sc=clamp(w/900,.6,1.15);
  // speedometer + tachometer
  const R=70*sc,cx=w-R-18*sc,cy=h-R-14*sc,spd=Math.abs(p.vx)*3.6,maxS=Math.max(240,Math.ceil(p.topKmh/40)*40),a0=Math.PI*.75,a1=Math.PI*2.25;
  g.save();g.fillStyle='rgba(8,12,18,.72)';g.beginPath();g.arc(cx,cy,R+8*sc,0,7);g.fill();g.lineWidth=7*sc;g.strokeStyle='rgba(255,255,255,.1)';g.beginPath();g.arc(cx,cy,R-6*sc,a0,a1);g.stroke();

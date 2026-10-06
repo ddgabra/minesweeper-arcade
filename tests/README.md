@@ -5,7 +5,7 @@ Run in a disposable browser profile against a static server. These checks delibe
 With the game loaded, evaluate each file in the page's JavaScript context, in this order:
 
 1. `start-check.js` starts a Country Roads run and builds a station.
-2. `game-check.js` checks robbery rewards and cooldown, single-use loot, car ownership transfer, combat, prop collision damage, swimming, rescue, cameras and difficulty presets.
+2. `game-check.js` checks that the rigged characters load, robbery rewards and cooldown, single-use loot, walk-to-door carjacking, punches, pistol hits, reloading, weapon switching, jumping, prop collision damage, swimming, rescue, cameras and difficulty presets.
 3. `drift-check.js` starts the drift map and checks slide scoring, physics stability, camera-facing coins and keyboard walking.
 4. `coast-check.js` starts the real Sunset Coast map and checks water entry, swimming movement and drowning rescue.
 
